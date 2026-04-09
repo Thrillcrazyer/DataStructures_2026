@@ -32,7 +32,6 @@ class LinkedList:
         if self.is_empty():
             raise IndexError("List is empty")
         return self.head.get_next()
-
     def last(self):
         """Accessor 2 last
         """
@@ -115,7 +114,6 @@ if __name__ == "__main__":
     linked_list.insert_after(linked_list.head, "난 Real 한 것만 뱉어서")
     linked_list.insert_after(linked_list.head.get_next(), "개명 신청 했어")
     linked_list.insert_before(linked_list.tail, "김진짜")
-
     print(f"{'1. Linked List insertions test':-<80}")
     # Output: [{Prev: head -> DNode(Element: 난 Real 한 것만 뱉어서) -> Next: 개명 신청 했어} ,{Prev: 난 Real 한 것만 뱉어서 -> DNode(Element: 개명 신청 했어) -> Next: 김진짜} ,{Prev: 개명 신청 했어 -> DNode(Element: 김진짜) -> Next: tail}]
     print(linked_list)
@@ -166,17 +164,14 @@ if __name__ == "__main__":
         linked_list.insert_before(linked_list.head, "test")
     except IndexError as e:
         print(f"insert_before(head): {e}")
-
     try:
         linked_list.replace(linked_list.head, "test")
     except IndexError as e:
         print(f"replace(head): {e}")
-
     try:
         linked_list.replace(linked_list.tail, "test")
     except IndexError as e:
         print(f"replace(tail): {e}")
-
     try:
         linked_list.remove(linked_list.head)
     except IndexError as e:
@@ -187,4 +182,3 @@ if __name__ == "__main__":
     except IndexError as e:
         print(f"remove(tail): {e}")
     print("-" * 80)
-

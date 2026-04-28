@@ -1,0 +1,33 @@
+digraph AutogradGraph {
+  rankdir=LR;
+  graph [bgcolor="white"];
+  node [fontname="Helvetica"];
+  edge [fontname="Helvetica"];
+  "tensor_140514239853520" [shape=record, style="rounded,filled", fillcolor="#FFF2CC", label="{f|data=59880.1406|requires_grad=True}"];
+  "fn_0" [shape=box, style="filled", fillcolor="#D9EAF7", label="AddBackward0"];
+  "fn_1" [shape=box, style="filled", fillcolor="#D9EAF7", label="MulBackward0"];
+  "fn_2" [shape=box, style="filled", fillcolor="#D9EAF7", label="AccumulateGrad"];
+  "tensor_140514238924816" [shape=record, style="rounded,filled", fillcolor="#FFF2CC", label="{x|data=2.0000|requires_grad=True}"];
+  "fn_3" [shape=box, style="filled", fillcolor="#D9EAF7", label="AccumulateGrad"];
+  "tensor_140514239853920" [shape=record, style="rounded,filled", fillcolor="#FFF2CC", label="{y|data=3.0000|requires_grad=True}"];
+  "fn_4" [shape=box, style="filled", fillcolor="#D9EAF7", label="ExpBackward0"];
+  "fn_5" [shape=box, style="filled", fillcolor="#D9EAF7", label="AddBackward0"];
+  "fn_6" [shape=box, style="filled", fillcolor="#D9EAF7", label="AddBackward0"];
+  "fn_7" [shape=box, style="filled", fillcolor="#D9EAF7", label="PowBackward0"];
+  "fn_8" [shape=box, style="filled", fillcolor="#D9EAF7", label="AccumulateGrad"];
+  "tensor_140514239853440" [shape=record, style="rounded,filled", fillcolor="#FFF2CC", label="{z|data=4.0000|requires_grad=True}"];
+  "tensor_140514238924816" -> "fn_2";
+  "fn_2" -> "fn_1";
+  "tensor_140514239853920" -> "fn_3";
+  "fn_3" -> "fn_1";
+  "fn_1" -> "fn_0";
+  "fn_3" -> "fn_6";
+  "fn_2" -> "fn_7";
+  "fn_7" -> "fn_6";
+  "fn_6" -> "fn_5";
+  "tensor_140514239853440" -> "fn_8";
+  "fn_8" -> "fn_5";
+  "fn_5" -> "fn_4";
+  "fn_4" -> "fn_0";
+  "fn_0" -> "tensor_140514239853520";
+}

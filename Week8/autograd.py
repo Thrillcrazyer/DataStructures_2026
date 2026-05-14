@@ -1,5 +1,10 @@
-import math
+"""
+https://karpathy.github.io/2026/02/12/microgpt/
+"""
 
+
+import math
+import random
 class Value:
     __slots__ = ('data', 'grad', '_children', '_local_grads')
 
@@ -39,6 +44,7 @@ class Value:
                     build_topo(child)
                 topo.append(v)
         build_topo(self)
+        print("TOPO:", [v.data for v in topo])  # Debug: Print the topological order of nodes
         self.grad = 1
         for v in reversed(topo):
             for child, local_grad in zip(v._children, v._local_grads):
@@ -47,10 +53,73 @@ class Value:
 
                 
 if __name__ == "__main__":
-    x = Value(2.0)
-    y = Value(3.0)
-    z = x * y + x ** 2
-    z.backward()
-    print(f"x: {x.data}, grad: {x.grad}")
-    print(f"y: {y.data}, grad: {y.grad}")
-    print(f"z: {z.data}, grad: {z.grad}")
+    def almost_equal(left, right, tol=1e-9):
+        return abs(left - right) <= tol
+
+    def evaluate_case_1():
+        a = Value(2.0)
+        b = Value(3.0)
+
+        c = a * b
+        d = a + b
+        e = c * d
+        e.backward()
+
+        return (e.data, a.grad, b.grad)
+
+    def evaluate_case_2():
+        x = Value(1.5)
+        y = Value(-0.75)
+        z = Value(2.0)
+
+        nonlinear = (
+            ((x + z) * (2 * y)) / (z ** 2)
+            + (5 + x).log()
+            - (-y)
+            + (5 - x).relu()
+            + (x * y).exp()
+            + (10 / (z + 3))
+        )
+
+        result = nonlinear - (x / (z + 1)) + (4 - y)
+        result.backward()
+
+        return (result.data, x.grad, y.grad, z.grad)
+
+    test_cases = [
+        {
+            "name": "Case 1",
+            "description": "Basic graph: ((a * b) * (a + b))",
+            "expected": (30.0, 21.0, 16.0),
+            "actual": evaluate_case_1(),
+        },
+        {
+            "name": "Case 2",
+            "description": "Complex expression using all Value member operations",
+            "expected": (
+                9.88395464425994,
+                -1.7979765300059416,
+                2.2369787010375246,
+                0.7041666666666666,
+            ),
+            "actual": evaluate_case_2(),
+        },
+    ]
+
+    print("데이터 구조 및 알고리즘 실습 - 2026/04/30 - Practice: Autograd Test Cases\n")
+
+    for test_case in test_cases:
+        actual = test_case["actual"]
+        expected = test_case["expected"]
+        passed = all(almost_equal(actual_value, expected_value) for actual_value, expected_value in zip(actual, expected))
+
+        print(f"{test_case['name']:<10}: {test_case['description']}")
+        print(f"{'Expected Output':<15}: {expected}")
+
+        if passed:
+            print(f"{test_case['name']} 통과")
+        else:
+            print(f"{test_case['name']} 실패")
+
+        print(f"{'Your Output':<15}: {actual}")
+        print("-" * 30)

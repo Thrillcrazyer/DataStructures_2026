@@ -4,6 +4,7 @@ import math
 def SOLVE(N):
     global totalcall
     totalcall += 1
+    
     if N==1:
         return 1
     elif N<1:
@@ -11,9 +12,7 @@ def SOLVE(N):
     else:
         return SOLVE(N//2)+SOLVE(N-N//2)
 
-A=[0]*10000001
-
-def SOVLE2(N):
+def SOVLE2(N,A):
     global totalcall
     totalcall += 1
     if A[N]!=0:
@@ -23,12 +22,14 @@ def SOVLE2(N):
     elif N<1:
         A[N]=0
     else:
-        A[N]=SOVLE2(N//2)+SOVLE2(N-N//2)
+        A[N]=SOVLE2(N//2,A)+SOVLE2(N-N//2,A)
     return A[N]
 
 
 
 if __name__ == "__main__":
+    
+    A=[0]*10000001
     
     K=10000000
     totalcall=0
@@ -43,7 +44,7 @@ if __name__ == "__main__":
     totalcall=0
     print("\n2. SOVLE2 Test")
     start_time = time.time()
-    print(SOVLE2(K))
+    print(SOVLE2(K,A))
     totaltime2=time.time() - start_time
     print(f"SOVLE2 took {totaltime2:.8f} seconds")
     print(f"SOVLE2 total calls: {totalcall}")

@@ -13,10 +13,7 @@ def drawOneTickWL(tickLength, tickLabel):
 
 #재귀 호출을 통해서 자의 눈금을 찍는 코드
 def drawTicks(tickLength):
-  if tickLength > 0:
-    drawTicks(tickLength-1) #recursive
-    drawOneTickWoL(tickLength)
-    drawTicks(tickLength-1) #recursive
+  return
 
 def drawRuler(nInches, majorLength):
   drawOneTickWL(majorLength, 0)
@@ -26,4 +23,4 @@ def drawRuler(nInches, majorLength):
 
 
 if __name__ == "__main__":
-    drawRuler(10,3)
+    drawRuler(10,4)
